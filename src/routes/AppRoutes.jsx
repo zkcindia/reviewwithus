@@ -8,6 +8,8 @@ import MainLayout from '../layouts/MainLayout';
 import AdminDashboard from '../admin/AdminDashboard';
 import PublicForm from '../features/public/PublicForm';
 import ReviewList from '../admin/ReviewList';
+import ThankYou from '../features/public/ThankYou';
+import Profile from '../admin/Profile';
 // import AdminDashboard from '../features/admin/AdminDashboard';
 // import ReviewList from '../features/admin/ReviewList';
 
@@ -29,6 +31,7 @@ const AppRoutes = () => {
       <Route path="/" element={<MainLayout />}>
         {/* Public routes */}
        <Route path="rateus/:businessId" element={<PublicForm />} />
+       <Route path="/thankyou" element={<ThankYou />} />
 
         <Route path="register" element={<AdminRegister />} />
       {/* <Route path="/thankyou" element={<ThankYou />} /> */}
@@ -48,6 +51,14 @@ const AppRoutes = () => {
         element={
           <PrivateRoute>
             <ReviewList />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/admin/profile"
+        element={
+          <PrivateRoute>
+            <Profile />
           </PrivateRoute>
         }
       />

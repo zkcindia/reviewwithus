@@ -86,7 +86,8 @@ const AdminRegister = () => {
         {/* Left Image (desktop only) */}
         <div className="hidden md:flex w-1/2 items-center justify-center p-8">
           <img
-            src="https://cdn.botpenguin.com/assets/website/User_Ratings_94a47fdd71.webp"
+            src="/User.webp"
+            // src="https://cdn.botpenguin.com/assets/website/User_Ratings_94a47fdd71.webp"
             //   src="https://okcredit-blog-images-prod.storage.googleapis.com/2021/04/businessregisteration1.jpg"
             alt="Business Registration"
             className="max-w-lg w-full "

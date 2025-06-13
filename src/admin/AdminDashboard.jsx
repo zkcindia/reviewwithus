@@ -5,11 +5,6 @@ import { adminDashboard } from '../service/api';
 import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
-  // const profile = {
-  //   business_name: "TrendyTech Solutions",
-  //   plan: "Premium",
-  //   plan_expiry: "2025-12-31",
-  // };
   const navigate = useNavigate();
   const [profile,setProfile] = useState({});
   const [recentReview,setRecentReview] = useState([]);
@@ -52,7 +47,7 @@ const AdminDashboard = () => {
         <div>
           <h3 className="text-xl font-semibold mb-2 text-white">Business Profile</h3>
           <p className="text-white"><strong>Business Name:</strong> {profile.business_name}</p>
-          <p className="text-white"><strong>Subscription Plan:</strong> Rs {profile?.amount || 0}/-</p>
+          <p className="text-white"><strong>Email:</strong> {profile?.email || ''}</p>
           <p className="text-white"><strong>Contact:</strong> {profile?.contact_number}</p>
         </div>
       </div>

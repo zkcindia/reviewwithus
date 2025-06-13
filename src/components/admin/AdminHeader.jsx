@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaUserCircle, FaSignOutAlt, FaTachometerAlt, FaStar } from 'react-icons/fa';
+import { FaUserCircle, FaSignOutAlt, FaTachometerAlt, FaStar, FaUser } from 'react-icons/fa';
 
 const AdminHeader = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -54,6 +54,14 @@ const AdminHeader = () => {
               <FaStar className="mr-2" />
               Reviews
             </Link>
+            <Link
+    to="/admin/profile"
+    className="flex items-center px-4 py-2 text-blue-950 hover:bg-blue-100"
+    onClick={() => setIsDropdownOpen(false)}
+  >
+    <FaUser className="mr-2" />
+    Profile
+  </Link>
             <button
               onClick={handleLogout}
               className="flex items-center w-full px-4 py-2 text-red-600 hover:bg-red-100"

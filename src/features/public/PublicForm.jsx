@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Rating from '@mui/material/Rating';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getOrganisationData, saveReview } from '../../service/api';
 
 export default function PublicForm() {
@@ -13,7 +13,7 @@ export default function PublicForm() {
     product_rating: 0,
     feedback: "",
   });
-
+const navigate = useNavigate()
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [showDetailedRatings, setShowDetailedRatings] = useState(true);
@@ -83,6 +83,7 @@ try {
       const response = await saveReview(businessId,formData)
       if(response.status===201){
         setSuccess("Thank you for your review!");
+        navigate('/thankyou')
         if(formData.google_rating >= 4){ 
           setTimeout(() => {
             window.open(
