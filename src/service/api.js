@@ -21,7 +21,7 @@ export const register = async(data) => {
 export const adminDashboard = async() => {
     const token = localStorage.getItem('access_token');
 
-    const response = await axios.get(`${apiUrl}/profile/`,
+    const response = await axios.get(`${apiUrl}/dashboard/`,
         {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -50,5 +50,16 @@ export const allReviews = async()=>{
             }
         }
     );
+    return response
+}
+// edit profile
+export const editProfile = async(data) => {
+    const token = localStorage.getItem('access_token');
+    const response = await axios.patch(`${apiUrl}/profile/`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Content_Type: "multipart/form-data",
+      },
+    });
     return response
 }
