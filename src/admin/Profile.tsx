@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FaUserEdit, FaGlobe, FaUpload } from 'react-icons/fa';
 import AdminHeader from '../components/admin/AdminHeader';
 import { adminDashboard, editProfile } from '../service/api';
+import Loading from '../components/common/Loading';
 
 export default function Profile() {
   const [logo, setLogo] = useState(
@@ -9,6 +10,7 @@ export default function Profile() {
   );
   const [logoFile, setLogoFile] = useState(null);
   const [profileData,setProfileData] = useState(null)
+  const [loading, setLoading] = useState(true); 
 
   const fileInputRef = useRef(null);
   useEffect(()=>{
@@ -24,6 +26,8 @@ export default function Profile() {
         }}
         catch(err){
           console.log(err)
+        }finally{
+          setLoading(false);
         }
     }
 
@@ -57,6 +61,7 @@ const handleUpload = async () => {
     console.log(error);
   }
 };
+if (loading) return <Loading />;
 
   return (
     <>

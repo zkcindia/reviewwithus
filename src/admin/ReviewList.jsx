@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { allReviews } from '../service/api';
 import AdminHeader from '../components/admin/AdminHeader';
+import Loading from '../components/common/Loading';
 
 const ReviewList = () => {
   const [reviews, setReviews] = useState([]);
@@ -13,6 +14,7 @@ const ReviewList = () => {
     good: 0,
     awesome: 0,
   });
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -23,7 +25,9 @@ const ReviewList = () => {
         setRatingSummary(ratingSummary || {})
       } catch (err) {
         setError('Failed to fetch reviews.');
-      }
+      }finally{
+          setLoading(false);
+        }
     };
     fetchReviews();
   }, []);
@@ -42,6 +46,8 @@ const ReviewList = () => {
   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
   const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
   const totalPages = Math.ceil(reviews.length / reviewsPerPage);
+
+  if (loading) return <Loading />;
 
   return (
     <div className="bg-white min-h-screen">

@@ -4,7 +4,7 @@ import { BsDownload } from 'react-icons/bs';
 
 export default function Qrcode({business}) {
   const cardRef = useRef();
-  const logoUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-O1HKQgrALBmcARyIVJtWH5pDv_RwW43Y0g&s";
+  const logoUrl = "/demo.jpg";
 
   const handleDownload = async () => {
     console.log('cardRef.current:', cardRef.current); // Debug log
@@ -32,27 +32,35 @@ export default function Qrcode({business}) {
     <div className="flex justify-center items-center flex-col p-4 bg-blue-100 w-full md:w-max h-full rounded-sm">
       <div className="w-full flex justify-between p-2 pt-0">
         <p className="text-sm font-medium">Download QR Code</p>
+        {
+          business.profile_image &&(
         <span
           className="bg-white p-1 shadow-lg rounded-sm cursor-pointer hover:bg-blue-50"
           onClick={handleDownload}
         >
           <BsDownload />
         </span>
+          )
+        }
       </div>
       <div
         className=" shadow-lg rounded-xl p-6 w-80 text-center relative overflow-hidden"
         style={{ backgroundColor: "#ffffff" }}
         ref={cardRef}
       >
-       <div className="w-full h-full absolute top-0 bottom-0 left-0 right-0 z-10 backdrop-blur-sm flex items-center justify-center">
-  <p className="text-sm text-blue-950 text-center text-wrap px-10">
+  {
+    !business.profile_image &&(
+      <div className="w-full h-full absolute top-0 bottom-0 left-0 right-0 z-10 backdrop-blur-sm flex items-center justify-center">
+      <p className="text-sm text-blue-950 text-center text-wrap px-10">
     To download QR, upload your business logo first in the profile menu.
   </p>
 </div>
+    )
+  }
 
         {/* Logo */}
         <img
-          src={logoUrl}
+          src={`${business?.profile_image || logoUrl}`}
           alt="Business Logo"
           className="w-20 h-20 mx-auto mb-4 rounded-full border-2 object-cover"
           style={{ border: "2px solid #3B82F6" }}
