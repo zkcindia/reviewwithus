@@ -11,6 +11,8 @@ export default function Profile() {
   const [logoFile, setLogoFile] = useState(null);
   const [profileData,setProfileData] = useState(null)
   const [loading, setLoading] = useState(true); 
+  const [uploading, setUploading] = useState(false);
+
 
   const fileInputRef = useRef(null);
   useEffect(()=>{
@@ -31,36 +33,61 @@ export default function Profile() {
         }
     }
 
- const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  if (file && file.type.startsWith('image/')) {
-    const reader = new FileReader();
-    reader.onloadend = () => setLogo(reader.result); // for preview
-    reader.readAsDataURL(file);
-    setLogoFile(file); // for upload
-  }
-};
+//  const handleFileChange = (event) => {
+//   const file = event.target.files[0];
+//   if (file && file.type.startsWith('image/')) {
+//     const reader = new FileReader();
+//     reader.onloadend = () => setLogo(reader.result); // for preview
+//     reader.readAsDataURL(file);
+//     setLogoFile(file); // for upload
+//     handleUpload();
+//   }
+// };
 
 
  const handleEditClick = async () => {
   fileInputRef.current.click();
 };
 
-const handleUpload = async () => {
-  if (!logoFile) return;
+// const handleUpload = async () => {
+//   if (!logoFile) return;
 
-  try {
+//   try {
+//     const formData = new FormData();
+//     formData.append('profile_image', logoFile); // ✅ use File, not base64 string
+
+//     const response = await editProfile(formData);
+//     if (response.status === 200) {
+//       fetchDashboardData();
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+const handleFileChange = async (event) => {
+  const file = event.target.files[0];
+  if (file && file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onloadend = () => setLogo(reader.result); // Show preview
+    reader.readAsDataURL(file);
+
+    // Immediately upload
     const formData = new FormData();
-    formData.append('profile_image', logoFile); // ✅ use File, not base64 string
-
-    const response = await editProfile(formData);
-    if (response.status === 200) {
-      fetchDashboardData();
+    formData.append('profile_image', file);
+    setUploading(true);
+    try {
+      const response = await editProfile(formData);
+      if (response.status === 200) {
+        fetchDashboardData();
+      }
+    } catch (error) {
+      console.error('Upload failed:', error);
+    }finally {
+      setUploading(false);
     }
-  } catch (error) {
-    console.log(error);
   }
 };
+
 if (loading) return <Loading />;
 
   return (
@@ -76,13 +103,23 @@ if (loading) return <Loading />;
                 alt="Business Logo"
                 className="w-24 h-24 rounded-full border-4 border-blue-200 object-cover mx-auto sm:mx-0"
               />
+              
               <button
-                className="absolute bottom-0 right-0 p-1 bg-white border border-blue-300 rounded-full shadow hover:bg-blue-100"
-                onClick={handleUpload}
-                title="Change Logo"
-              >
-                <FaUpload className="text-blue-600 text-sm" />
-              </button>
+  className="absolute bottom-0 right-0 p-1 bg-white border border-blue-300 rounded-full shadow hover:bg-blue-100"
+  onClick={handleEditClick}
+  title="Change Logo"
+  disabled={uploading}
+>
+  {uploading ? (
+    <svg className="animate-spin h-4 w-4 text-blue-600" viewBox="0 0 24 24">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+    </svg>
+  ) : (
+    <FaUpload className="text-blue-600 text-sm" />
+  )}
+</button>
+
               <input
                 type="file"
                 accept="image/*"
@@ -122,12 +159,26 @@ if (loading) return <Loading />;
 
           {/* Edit Logo Button */}
           <button
-            className="mt-6 w-full flex justify-center items-center gap-2 bg-blue-950 text-white py-2 rounded-md hover:bg-blue-900 transition"
-            onClick={handleEditClick}
-          >
-            <FaUserEdit />
-            Upload New Logo
-          </button>
+  className="mt-6 w-full flex justify-center items-center gap-2 bg-blue-950 text-white py-2 rounded-md hover:bg-blue-900 transition"
+  onClick={handleEditClick}
+  disabled={uploading}
+>
+  {uploading ? (
+    <>
+      <svg className="animate-spin h-4 w-4 mr-2 text-white" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+      </svg>
+      Uploading...
+    </>
+  ) : (
+    <>
+      <FaUserEdit />
+      Upload New Logo
+    </>
+  )}
+</button>
+
         </div>
       </div>
     </>

@@ -62,7 +62,7 @@ export default function Qrcode({business}) {
         <img
           src={`${business?.profile_image || logoUrl}`}
           alt="Business Logo"
-          className="w-20 h-20 mx-auto mb-4 rounded-full border-2 object-cover"
+          className="w-24 h-24 mx-auto mb-4 rounded-full border-2 object-cover"
           style={{ border: "2px solid #3B82F6" }}
         />
 
