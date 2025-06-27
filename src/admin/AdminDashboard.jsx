@@ -16,11 +16,13 @@ const AdminDashboard = () => {
     try {
       const response = await adminDashboard();
       if(response.status===200){
-        setProfile(response.data);
+        setProfile(response?.data || {});
         setRecentReview(response?.data?.recent_reviews || [])
       }}
       catch(err){
         console.log(err)
+        setRecentReview([]);
+        setProfile({});
       }finally {
       setLoading(false); // always stop loading at the end
     }
@@ -35,6 +37,16 @@ const AdminDashboard = () => {
   return (
     <div>
       <AdminHeader />
+      {!profile?.business_name ? (
+        <div className="flex flex-col items-center justify-center min-h-[60vh] p-6 text-center">
+          <h2 className="text-2xl font-bold mb-2 text-gray-800">
+            Welcome to Your Business Dashboard
+          </h2>
+          <p className="text-gray-600 mb-6 max-w-md">
+            You don't have any reviews yet. Contact the administrator to promote your business 
+            and start receiving customer feedback.
+          </p>
+          </div>):(
       <div className="p-6 max-w-6xl mx-auto">
         <h2 className="text-2xl font-bold mb-6">
           Welcome to Business Dashboard
@@ -125,7 +137,7 @@ const AdminDashboard = () => {
             <Qrcode business={profile} />
           </div>
         </div>
-      </div>
+      </div>)}
     </div>
   );
 };

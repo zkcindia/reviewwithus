@@ -99,7 +99,7 @@ export default function Qrcode({business}) {
         </p>
         <div>
           <p className="text-xs">Powered By</p>
-          <span className="text-xs font-semibold">Write Riview Us</span>
+          <span className="text-xs font-semibold">Riview With Us</span>
         </div>
       </div>
     </div>
