@@ -96,6 +96,7 @@ export default function PublicForm() {
       setIsGenerating(false);
     }
   };
+  
 
   // Save review, copy to clipboard AND go to Google
   const copyAndGoToGoogle = async () => {
