@@ -63,3 +63,20 @@ export const editProfile = async(data) => {
     });
     return response
 }
+
+
+export const generateContent = async (prompt) => {
+    try {
+        const response = await axios.post(`${apiUrl}/generate-content/`, {
+            title: prompt
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        return response;
+    } catch (error) {
+        console.error("AI Generation Error:", error);
+        throw error;
+    }
+}
